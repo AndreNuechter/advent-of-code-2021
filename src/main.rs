@@ -3,6 +3,9 @@ use std::{ env, fs };
 mod day_one;
 use day_one::day_one;
 
+mod day_two;
+use day_two::day_two;
+
 fn main() -> Result<(), &'static str> {
     let mut args = env::args();
 
@@ -24,6 +27,7 @@ fn main() -> Result<(), &'static str> {
 
     match day {
         1 => day_one(&input),
+        2 => day_two(&input),
         _ => return Err("No solution for this day found")
     }
 
