@@ -9,6 +9,9 @@ use day_two::day_two;
 mod day_three;
 use day_three::day_three;
 
+mod day_four;
+use day_four::day_four;
+
 fn main() -> Result<(), &'static str> {
     let mut args = env::args();
 
@@ -36,6 +39,7 @@ fn main() -> Result<(), &'static str> {
         1 => day_one(&input),
         2 => day_two(&input),
         3 => day_three(&input),
+        4 => day_four(&input),
         _ => return Err("No solution for this day found")
     }
 
