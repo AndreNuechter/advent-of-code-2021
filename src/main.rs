@@ -6,6 +6,9 @@ use day_one::day_one;
 mod day_two;
 use day_two::day_two;
 
+mod day_three;
+use day_three::day_three;
+
 fn main() -> Result<(), &'static str> {
     let mut args = env::args();
 
@@ -19,8 +22,12 @@ fn main() -> Result<(), &'static str> {
         },
         None => return Err("You didn't specify a day")
     };
-
-    let input = match fs::read_to_string(format!("input-files/{}.txt", day)) {
+    let test = match args.next() {
+        Some(_) => ".test",
+        _ => ""
+    };
+    let filename = format!("input-files/{}{}.txt", day, test);
+    let input = match fs::read_to_string(filename) {
         Ok(content) => content,
         _ => return Err("Error while opening the input file")
     };
@@ -28,6 +35,7 @@ fn main() -> Result<(), &'static str> {
     match day {
         1 => day_one(&input),
         2 => day_two(&input),
+        3 => day_three(&input),
         _ => return Err("No solution for this day found")
     }
 
