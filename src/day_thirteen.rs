@@ -44,6 +44,7 @@ fn part_two(transparent_sheet: &Vec<Vec<usize>>, folding_instructions: &Vec<Fold
     let mut result = transparent_sheet;
     // NOTE: without this temporary vector, which is never read, we couldnt persist changes between loops
     // as we cant move the return of combine_sheets
+    #[allow(unused_assignments)]
     let mut temp = Vec::new();
 
     for folding_instruction in folding_instructions.iter() {
