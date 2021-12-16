@@ -1,5 +1,8 @@
 pub fn day_one(input: &str) {
-    let measurements = input.lines().map(|line| line.parse::<u32>().unwrap()).collect::<Vec<u32>>();
+    let measurements = input
+        .lines()
+        .map(|line| line.parse::<u32>().unwrap())
+        .collect::<Vec<u32>>();
     let increases = count_increases(&measurements);
 
     println!("pt 1: {}", increases);
@@ -13,7 +16,7 @@ pub fn day_one(input: &str) {
 fn create_windowed_measurements(measurements: &Vec<u32>) -> Vec<u32> {
     let measurement_count = measurements.len();
     let mut windowed_measurements = Vec::new();
-    
+
     for index in 0..measurement_count {
         let next_step = index + 3;
         if next_step <= measurement_count {
@@ -35,8 +38,8 @@ fn count_increases(measurements: &Vec<u32>) -> u32 {
                     increases += 1;
                 }
                 Some(*measurement)
-            },
-            None => Some(*measurement)
+            }
+            None => Some(*measurement),
         }
     }
 

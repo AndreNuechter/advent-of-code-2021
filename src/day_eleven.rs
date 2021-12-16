@@ -1,11 +1,12 @@
 pub fn day_eleven(input: &str) {
     let mut octopuses: Vec<Vec<u8>> = input
         .lines()
-        .map(|row| row
-            .split("")
-            .filter(|c| c != &"")
-            .map(|c| c.parse::<u8>().unwrap())
-            .collect::<Vec<u8>>())
+        .map(|row| {
+            row.split("")
+                .filter(|c| c != &"")
+                .map(|c| c.parse::<u8>().unwrap())
+                .collect::<Vec<u8>>()
+        })
         .collect();
     part_one(&mut octopuses.clone());
     part_two(&mut octopuses);
@@ -47,10 +48,7 @@ fn step_up(octopuses: &mut Vec<Vec<u8>>) -> (Vec<Vec<u8>>, usize) {
     let mut flashers: Vec<String> = Vec::new();
     let mut octopuses: Vec<Vec<u8>> = octopuses
         .iter()
-        .map(|row| row
-            .iter()
-            .map(|octopus| octopus + 1)
-            .collect())
+        .map(|row| row.iter().map(|octopus| octopus + 1).collect())
         .collect();
 
     let mut next_steppers: Vec<(usize, usize)> = Vec::new();
@@ -78,7 +76,10 @@ fn step_up(octopuses: &mut Vec<Vec<u8>>) -> (Vec<Vec<u8>>, usize) {
     }
 
     flashers.iter().for_each(|flasher| {
-        let positions: Vec<usize> = flasher.split(",").map(|pos| pos.parse::<usize>().unwrap()).collect();
+        let positions: Vec<usize> = flasher
+            .split(",")
+            .map(|pos| pos.parse::<usize>().unwrap())
+            .collect();
         octopuses[positions[0]][positions[1]] = 0;
     });
 
@@ -92,51 +93,35 @@ fn get_neighbours(octopuses: &Vec<Vec<u8>>, pos_y: usize, pos_x: usize) -> Vec<(
 
     // NOTE: going around clockwise, starting top-left
     if pos_y > 0 && pos_x > 0 {
-        neighbours.push(
-            (pos_y - 1, pos_x - 1)
-        );
+        neighbours.push((pos_y - 1, pos_x - 1));
     }
-    
+
     if pos_y > 0 {
-        neighbours.push(
-            (pos_y - 1, pos_x)
-        );
+        neighbours.push((pos_y - 1, pos_x));
     }
 
     if pos_y > 0 && pos_x < (row_length - 1) {
-        neighbours.push(
-            (pos_y - 1, pos_x + 1)
-        );
+        neighbours.push((pos_y - 1, pos_x + 1));
     }
 
     if pos_x < (row_length - 1) {
-        neighbours.push(
-            (pos_y, pos_x + 1)
-        );
+        neighbours.push((pos_y, pos_x + 1));
     }
 
     if pos_x < (row_length - 1) && pos_y < (row_count - 1) {
-        neighbours.push(
-            (pos_y + 1, pos_x + 1)
-        );
+        neighbours.push((pos_y + 1, pos_x + 1));
     }
 
     if pos_y < (row_count - 1) {
-        neighbours.push(
-            (pos_y + 1, pos_x)
-        );
+        neighbours.push((pos_y + 1, pos_x));
     }
 
     if pos_x > 0 && pos_y < (row_count - 1) {
-        neighbours.push(
-            (pos_y + 1, pos_x - 1)
-        );
+        neighbours.push((pos_y + 1, pos_x - 1));
     }
 
     if pos_x > 0 {
-        neighbours.push(
-            (pos_y, pos_x - 1)
-        );
+        neighbours.push((pos_y, pos_x - 1));
     }
 
     neighbours

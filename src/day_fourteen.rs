@@ -25,7 +25,9 @@ fn part_two(polymer_template: &str, insertion_rules: &HashMap<&str, &str>) {
 
     for offset in 0..polymer_template.len() - 1 {
         let mut chars = polymer_template[offset..offset + 2].chars();
-        *pairs.entry([chars.next().unwrap(), chars.next().unwrap()]).or_insert(0) += 1;
+        *pairs
+            .entry([chars.next().unwrap(), chars.next().unwrap()])
+            .or_insert(0) += 1;
     }
 
     for character in polymer_template.chars() {
@@ -41,7 +43,12 @@ fn part_two(polymer_template: &str, insertion_rules: &HashMap<&str, &str>) {
             if *current_count == 0 {
                 continue;
             } else {
-                let new_char = insertion_rules.get(key_str).unwrap().chars().nth(0).unwrap();
+                let new_char = insertion_rules
+                    .get(key_str)
+                    .unwrap()
+                    .chars()
+                    .nth(0)
+                    .unwrap();
 
                 *letter_counts.entry(new_char).or_insert(0) += current_count;
                 changes.push(((*left, *right), -*current_count));
@@ -55,7 +62,10 @@ fn part_two(polymer_template: &str, insertion_rules: &HashMap<&str, &str>) {
         }
     }
 
-    let (min, max) = (letter_counts.values().min().unwrap(), letter_counts.values().max().unwrap());
+    let (min, max) = (
+        letter_counts.values().min().unwrap(),
+        letter_counts.values().max().unwrap(),
+    );
 
     println!("{:?}", max - min);
 }
@@ -70,7 +80,10 @@ fn part_one(polymer_template: &str, insertion_rules: &HashMap<&str, &str>) {
     }
 
     let letter_counts = count_letters(&polymer);
-    let (min, max) = (letter_counts.values().min().unwrap(), letter_counts.values().max().unwrap());
+    let (min, max) = (
+        letter_counts.values().min().unwrap(),
+        letter_counts.values().max().unwrap(),
+    );
 
     println!("{:?}", max - min);
 }
@@ -90,7 +103,12 @@ fn polymerase(polymer_template: &str, insertion_rules: &HashMap<&str, &str>) -> 
     let mut insertions = Vec::new();
 
     for offset in 0..polymer_template.len() - 1 {
-        insertions.push((offset + 1, insertion_rules.get(&polymer_template[offset..offset + 2]).unwrap()))
+        insertions.push((
+            offset + 1,
+            insertion_rules
+                .get(&polymer_template[offset..offset + 2])
+                .unwrap(),
+        ))
     }
 
     for (position, value) in insertions.iter().rev() {

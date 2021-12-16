@@ -1,8 +1,12 @@
 pub fn day_two(input: &str) {
-    let commands = input.lines()
+    let commands = input
+        .lines()
         .map(|c| {
             let mut split = c.split_whitespace();
-            (split.next().unwrap(), split.next().unwrap().parse::<i32>().unwrap())
+            (
+                split.next().unwrap(),
+                split.next().unwrap().parse::<i32>().unwrap(),
+            )
         })
         .collect::<Vec<(&str, i32)>>();
     part_one(&commands);
@@ -10,23 +14,20 @@ pub fn day_two(input: &str) {
 }
 
 fn part_one(commands: &Vec<(&str, i32)>) {
-    let (horizontal_moves, vertical_moves): (Vec<(&str, i32)>, Vec<(&str, i32)>) = commands
+    let (horizontal_moves, vertical_moves): (Vec<(&str, i32)>, Vec<(&str, i32)>) =
+        commands.iter().partition(|(cmd, _)| *cmd == "forward");
+    let horizontal_moves: i32 = horizontal_moves.iter().map(|(_, val)| val).sum();
+    let vertical_moves: i32 = vertical_moves
         .iter()
-        .partition(|(cmd, _)| *cmd == "forward");
-    let horizontal_moves: i32 = horizontal_moves.iter()
-        .map(|(_, val)| val)
-        .sum();
-    let vertical_moves: i32 = vertical_moves.iter()
-        .map(|(cmd, val)| {
-            if *cmd == "up" {
-                val * -1
-            } else {
-                *val
-            }
-        })
+        .map(|(cmd, val)| if *cmd == "up" { val * -1 } else { *val })
         .sum();
 
-    println!("pt 1: {} x {} = {}", horizontal_moves, vertical_moves, horizontal_moves * vertical_moves);
+    println!(
+        "pt 1: {} x {} = {}",
+        horizontal_moves,
+        vertical_moves,
+        horizontal_moves * vertical_moves
+    );
 }
 
 fn part_two(commands: &Vec<(&str, i32)>) {
@@ -43,11 +44,16 @@ fn part_two(commands: &Vec<(&str, i32)>) {
                 horizontal_position = h;
                 depth = d;
             }
-            _ => print!("nonono")
+            _ => print!("nonono"),
         }
     }
 
-    println!("pt 1: {} x {} = {}", horizontal_position, depth, horizontal_position * depth);
+    println!(
+        "pt 1: {} x {} = {}",
+        horizontal_position,
+        depth,
+        horizontal_position * depth
+    );
 }
 
 fn down(val: i32, aim: i32) -> i32 {

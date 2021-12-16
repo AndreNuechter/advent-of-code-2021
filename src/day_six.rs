@@ -2,18 +2,13 @@ use std::fmt;
 
 #[derive(Clone)]
 struct Lanternfish {
-    days_to_reproduce: u8
+    days_to_reproduce: u8,
 }
 
 pub fn day_six(input: &str) {
     let fish: Vec<Lanternfish> = input
         .split(",")
-        .map(|num_string| Lanternfish::from(
-            num_string
-                .parse::<u8>()
-                .unwrap()
-            )
-        )
+        .map(|num_string| Lanternfish::from(num_string.parse::<u8>().unwrap()))
         .collect();
     part_one(&mut fish.clone(), 80);
     part_two(&fish, 256);
@@ -22,7 +17,7 @@ pub fn day_six(input: &str) {
 fn part_two(fish: &Vec<Lanternfish>, days: u32) {
     let cycle_length = 7;
     let first_cycle_delay = 2;
-    let mut stages: Vec<u64> = vec!(0; cycle_length + first_cycle_delay);
+    let mut stages: Vec<u64> = vec![0; cycle_length + first_cycle_delay];
 
     for fish_n in fish.iter() {
         stages[fish_n.days_to_reproduce as usize] += 1;
@@ -64,7 +59,9 @@ fn part_one(fish: &mut Vec<Lanternfish>, days: u32) {
 
 impl Lanternfish {
     fn new() -> Lanternfish {
-        Lanternfish { days_to_reproduce: 8 }
+        Lanternfish {
+            days_to_reproduce: 8,
+        }
     }
 }
 
@@ -76,10 +73,6 @@ impl From<u8> for Lanternfish {
 
 impl fmt::Debug for Lanternfish {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "|days_to_reproduce: {}|",
-            self.days_to_reproduce
-        )
+        write!(f, "|days_to_reproduce: {}|", self.days_to_reproduce)
     }
 }

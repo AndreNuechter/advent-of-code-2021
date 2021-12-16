@@ -1,7 +1,10 @@
 use std::cmp;
 
 pub fn day_seven(input: &str) {
-    let horizontal_positions = input.split(",").map(|pos_str| pos_str.parse::<u32>().unwrap()).collect::<Vec<u32>>();
+    let horizontal_positions = input
+        .split(",")
+        .map(|pos_str| pos_str.parse::<u32>().unwrap())
+        .collect::<Vec<u32>>();
     part_one(&horizontal_positions);
     part_two(&horizontal_positions);
 }
@@ -11,7 +14,7 @@ fn part_two(horizontal_positions: &Vec<u32>) {
     find_fuel_cost(
         &horizontal_positions,
         &find_average(&horizontal_positions),
-        &summed_difference
+        &summed_difference,
     );
 }
 
@@ -20,14 +23,14 @@ fn part_one(horizontal_positions: &Vec<u32>) {
     find_fuel_cost(
         &horizontal_positions,
         &find_median(&horizontal_positions),
-        &difference
+        &difference,
     );
 }
 
 fn find_average(list: &Vec<u32>) -> u32 {
     let sum = list.iter().sum::<u32>();
     let count = list.len() as f64;
-    let result = ((to_nearest_ten(sum) as f64 / count)) as u32;
+    let result = (to_nearest_ten(sum) as f64 / count) as u32;
     println!("{} / {} = {}", sum, count, result);
     result
 }
@@ -62,11 +65,18 @@ fn summed_difference(a: u32, b: u32) -> u32 {
     sum_up(difference(a, b))
 }
 
-fn find_fuel_cost(horizontal_positions: &Vec<u32>, rally_point: &u32, cost_function: &dyn Fn(u32, u32) -> u32) -> u32 {
+fn find_fuel_cost(
+    horizontal_positions: &Vec<u32>,
+    rally_point: &u32,
+    cost_function: &dyn Fn(u32, u32) -> u32,
+) -> u32 {
     let result = horizontal_positions
         .iter()
         .map(|pos| cost_function(*pos, *rally_point))
         .sum();
-    println!("Rallypoint @ {}, calculated fuel cost: {}", result, rally_point);
+    println!(
+        "Rallypoint @ {}, calculated fuel cost: {}",
+        result, rally_point
+    );
     result
 }
