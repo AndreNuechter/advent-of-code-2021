@@ -1,4 +1,4 @@
-use std::{ env, fs };
+use std::{env, fs};
 
 mod day_one;
 use day_one::day_one;
@@ -26,6 +26,8 @@ mod day_thirteen;
 use day_thirteen::day_thirteen;
 mod day_fourteen;
 use day_fourteen::day_fourteen;
+mod day_sixteen;
+use day_sixteen::day_sixteen;
 
 fn main() -> Result<(), &'static str> {
     let mut args = env::args();
@@ -36,18 +38,18 @@ fn main() -> Result<(), &'static str> {
     let day = match args.next() {
         Some(arg) => match arg.parse::<u8>() {
             Ok(val) => val,
-            _ => return Err("The specified day needs to be a positive integer")
+            _ => return Err("The specified day needs to be a positive integer"),
         },
-        None => return Err("You didn't specify a day")
+        None => return Err("You didn't specify a day"),
     };
     let test = match args.next() {
         Some(_) => ".test",
-        _ => ""
+        _ => "",
     };
     let filename = format!("input-files/{}{}.txt", day, test);
     let input = match fs::read_to_string(filename) {
         Ok(content) => content,
-        _ => return Err("Error while opening the input file")
+        _ => return Err("Error while opening the input file"),
     };
 
     match day {
@@ -64,7 +66,8 @@ fn main() -> Result<(), &'static str> {
         11 => day_eleven(&input),
         13 => day_thirteen(&input),
         14 => day_fourteen(&input),
-        _ => return Err("No solution for this day found")
+        16 => day_sixteen(&input),
+        _ => return Err("No solution for this day found"),
     }
 
     Ok(())
